@@ -1,0 +1,510 @@
+:root {
+  --bg-color: #0c0c0c;
+  --panel-bg: #161616;
+  --text-main: #ffffff;
+  --text-dim: rgba(255, 255, 255, 0.7);
+  --grid-line: #222222;
+  --accent-blue: #5b99c2;
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Header Styles */
+.site-header {
+  background-color: var(--panel-bg);
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 40px;
+  border-bottom: 1px solid var(--grid-line);
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-left, .header-right {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.logo-link {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+
+/* Modal Overlay */
+.search-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column; /* Ensure vertical stack */
+  align-items: center; /* Center horizontally */
+  padding-top: 15vh;
+  /* Gradual Fade In */
+  animation: fadeIn 0.3s ease forwards;
+  pointer-events: auto; /* Force pointer capture */
+}
+
+/* Ensure the container doesn't take up full vertical space */
+.modal-search-container {
+  width: 90%;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex-grow: 0; /* Important: don't stretch */
+  height: auto;
+  pointer-events: auto;
+  /* Box Slide Down */
+  animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Transitions and animations */
+.search-overlay.closing {
+  animation: fadeOut 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.search-overlay.closing .modal-search-container {
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-20px); }
+  to { transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(0); }
+  to { transform: translateY(-20px); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.big-search-box {
+  background-color: #161616;
+  border: 1px solid #333;
+  padding: 20px 30px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+
+.big-search-box:focus-within {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 20px rgba(91, 153, 194, 0.2);
+}
+
+.big-search-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  width: 100%;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.modal-hint {
+  color: #444;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.search-results-container {
+  max-height: 50vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-right: 10px;
+}
+
+/* Custom scrollbar for search results */
+.search-results-container::-webkit-scrollbar {
+  width: 4px;
+}
+.search-results-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+.search-results-container::-webkit-scrollbar-thumb {
+  background: #333;
+}
+
+.loading-state, .no-results {
+  padding: 20px;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.loading-state-animated {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.loading-spinner {
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  border-top-color: var(--accent-blue);
+  animation: spin 0.8s linear infinite;
+}
+
+/* Update original search bar to look clickable */
+.main-search-bar {
+  cursor: pointer;
+  background-color: var(--bg-color);
+  border: 1px solid var(--grid-line);
+  padding: 8px 16px;
+  width: 400px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: border-color 0.2s;
+}
+
+.main-search-bar:focus-within {
+  border-color: var(--accent-blue);
+}
+
+.search-icon {
+  font-size: 0.9rem;
+  opacity: 0.5;
+}
+
+.search-input-field {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  width: 100%;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  transition: color 0.15s;
+}
+
+.nav-link:hover {
+  color: var(--text-main);
+}
+
+.header-right {
+  flex-wrap: wrap;
+  gap: 18px;
+  justify-content: flex-end;
+}
+
+.user-avatar-placeholder {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #333;
+  border: 1px solid var(--grid-line);
+}
+
+/* Home Layout */
+.home-layout {
+  position: relative;
+  isolation: isolate;
+  padding: 80px;
+  max-width: 1400px;
+  min-height: calc(100vh - 60px);
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.home-layout::before,
+.home-layout::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.home-layout::before {
+  background:
+    center/cover no-repeat url("https://d1lss44hh2trtw.cloudfront.net/assets/article/2019/10/07/garden-of-salvation-raid-guide-destiny-2_feature.jpg");
+  z-index: -2;
+}
+
+.home-layout::after {
+  background: rgba(0, 0, 0, 0.6);
+  z-index: -1;
+}
+
+.branding-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+}
+
+.hero-title {
+  font-size: 42px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 0 0 48px 0;
+  letter-spacing: -0.02em;
+}
+
+.trending-section {
+  position: relative;
+  z-index: 1;
+  width: 380px;
+  margin: 0 auto;
+}
+
+.trending-header {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-dim);
+  margin-bottom: 20px;
+}
+
+.weapon-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.weapon-item-link {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 12px;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+  margin-bottom: 8px; 
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  width: min(100%, 380px);
+}
+
+/* cool hovering effect that makes the weapon box shiny */
+.weapon-item-link:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 1.0); /* Full pop at 1.0 on hover */
+}
+
+.weapon-icon-container {
+  width: 40px;
+  height: 40px;
+  background-color: #222;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.weapon-icon-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.weapon-text-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.weapon-name {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.weapon-category {
+  font-size: 12px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+/* Arrow that appears on hover */
+.weapon-item-link .hover-arrow {
+  margin-left: auto;
+  opacity: 0;
+  transition: opacity 0.2s, transform 0.2s;
+  transform: translateX(-4px);
+}
+
+.weapon-item-link:hover .hover-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.info-page {
+  min-height: calc(100vh - 60px);
+  padding: 56px 24px 80px;
+}
+
+.info-shell {
+  margin: 0 auto;
+  max-width: 1120px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.info-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  padding: 28px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.info-card-wide {
+  max-width: 860px;
+}
+
+.info-eyebrow {
+  margin: 0 0 10px;
+  color: var(--accent-blue);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.info-title {
+  margin: 0 0 18px;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.info-section-title {
+  margin: 0 0 14px;
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.info-copy {
+  margin: 0 0 14px;
+  max-width: 70ch;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+
+.info-list {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--text-dim);
+  line-height: 1.8;
+}
+
+.info-footer {
+  margin: 20px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .site-header {
+    padding: 0 20px;
+    gap: 12px;
+    height: auto;
+    min-height: 60px;
+    flex-wrap: wrap;
+  }
+
+  .main-search-bar {
+    width: 100%;
+    order: 3;
+  }
+
+  .header-right {
+    gap: 12px;
+  }
+
+  .home-layout {
+    padding: 40px 24px;
+  }
+
+  .trending-section {
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .info-page {
+    padding: 32px 20px 56px;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+}

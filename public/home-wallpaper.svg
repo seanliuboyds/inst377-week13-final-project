@@ -1,0 +1,45 @@
+<svg width="1600" height="1100" viewBox="0 0 1600 1100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="1100" fill="#070809"/>
+  <rect width="1600" height="1100" fill="url(#bg)"/>
+  <ellipse cx="1210" cy="240" rx="430" ry="220" fill="url(#glowA)" opacity="0.75"/>
+  <ellipse cx="360" cy="870" rx="520" ry="240" fill="url(#glowB)" opacity="0.7"/>
+  <ellipse cx="780" cy="480" rx="620" ry="320" fill="url(#glowC)" opacity="0.36"/>
+  <g opacity="0.25">
+    <path d="M0 875C225 760 375 720 640 780C920 842 1125 802 1600 620V1100H0V875Z" fill="url(#ridgeA)"/>
+    <path d="M0 960C285 815 560 852 785 910C1030 973 1275 958 1600 785V1100H0V960Z" fill="url(#ridgeB)"/>
+  </g>
+  <g opacity="0.22" stroke="#E5EEF7">
+    <path d="M1040 260L1335 515"/>
+    <path d="M960 320L1230 570"/>
+    <path d="M1120 214L1404 461"/>
+    <path d="M230 760L500 930"/>
+    <path d="M292 700L610 904"/>
+  </g>
+  <defs>
+    <linearGradient id="bg" x1="138" y1="47" x2="1326" y2="1025" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#11161A"/>
+      <stop offset="0.45" stop-color="#0B0E10"/>
+      <stop offset="1" stop-color="#050607"/>
+    </linearGradient>
+    <radialGradient id="glowA" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1210 240) rotate(90) scale(220 430)">
+      <stop stop-color="#91C6F3"/>
+      <stop offset="1" stop-color="#91C6F3" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowB" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(360 870) rotate(90) scale(240 520)">
+      <stop stop-color="#425C72"/>
+      <stop offset="1" stop-color="#425C72" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowC" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(780 480) rotate(90) scale(320 620)">
+      <stop stop-color="#B3D6F2"/>
+      <stop offset="1" stop-color="#B3D6F2" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ridgeA" x1="800" y1="620" x2="800" y2="1100" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2B3640"/>
+      <stop offset="1" stop-color="#0A0C0E"/>
+    </linearGradient>
+    <linearGradient id="ridgeB" x1="800" y1="785" x2="800" y2="1100" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1A2026"/>
+      <stop offset="1" stop-color="#050607"/>
+    </linearGradient>
+  </defs>
+</svg>
