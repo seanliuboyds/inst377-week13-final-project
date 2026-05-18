@@ -1,100 +1,34 @@
-# MIDA Mega Tool
+# **Title: MIDA-Mega-Tool: A Destiny 2 Gear Customization System**
+## Project - Sean Liu
+## Description: 
+My application was built to help users create their favorite gear customization rolls seemlessly. The website I used for gear customization was recently brought offline and I think it would be a great service towards the community to provide a fan-made tool to help others easily create weapon combinations. My goal is to provide the community with a resource to promote the game and make the game systems easier to understand for new players.
 
-Developer onboarding for the Destiny 2 weapon search and customization app.
+### Target Audience
+The target audience I'm aiming for is for other Destiny 2 players to see what I was able to accomplish in web developemnt and show them how it isn't as hard as it seems to navigate the Bungie.net API and manifest API. This should hopefully motivate new gamers to create a public facing webapp for games that share the characteristic of an public API and build experimental community tools for others to use.
 
-## What This Project Is
+## Dev & User Manual
 
-This repo is a Next.js 16 app that lets users:
-
-- search Destiny 2 weapons
-- open a weapon customization page
-- inspect weapon perk sockets and stats
-- browse imported manifest data from Supabase
-- track trending weapons based on search-result clicks
-
-Core integrations:
-
-- Bungie API for live manifest/detail lookups and fallback data paths
-- Supabase for imported manifest tables and trending search analytics
-- Vercel for deployment
-
-## Important Note About Next.js
-
-This project uses a newer Next.js version with breaking changes.
-
-Before making framework-level changes, read the relevant docs in:
-
-`node_modules/next/dist/docs/`
-
-At minimum, route/page work should follow the docs for:
-
-- `app` router
-- route handlers
-- route segment config like `dynamic = 'force-dynamic'`
-
-## Tech Stack
-
-- Node.js
-- npm
-- Next.js 16
-- React 19
-- TypeScript
-- Supabase
-- Bungie API
-- Vercel
-
-## Project Layout
-
-Main app/runtime files:
-
-- [src/app/layout.tsx](C:/Users/StriX/mida-mega-tool-next/src/app/layout.tsx)
-- [src/app/page.tsx](C:/Users/StriX/mida-mega-tool-next/src/app/page.tsx)
-- [src/app/components/Header.tsx](C:/Users/StriX/mida-mega-tool-next/src/app/components/Header.tsx)
-- [src/app/api/weapons/search/route.ts](C:/Users/StriX/mida-mega-tool-next/src/app/api/weapons/search/route.ts)
-- [src/app/api/weapons/details/[hash]/route.ts](C:/Users/StriX/mida-mega-tool-next/src/app/api/weapons/details/[hash]/route.ts)
-- [src/app/api/weapons/trending/route.ts](C:/Users/StriX/mida-mega-tool-next/src/app/api/weapons/trending/route.ts)
-- [src/app/api/manifest/items/route.ts](C:/Users/StriX/mida-mega-tool-next/src/app/api/manifest/items/route.ts)
-- [src/app/weapon-lab/[hash]/page.tsx](C:/Users/StriX/mida-mega-tool-next/src/app/weapon-lab/[hash]/page.tsx)
-
-Shared helpers:
-
-- [src/lib/d2-api-human.ts](C:/Users/StriX/mida-mega-tool-next/src/lib/d2-api-human.ts)
-- [src/lib/manifest-items.ts](C:/Users/StriX/mida-mega-tool-next/src/lib/manifest-items.ts)
-- [src/lib/weapon-search-trending.ts](C:/Users/StriX/mida-mega-tool-next/src/lib/weapon-search-trending.ts)
-- [src/lib/supabase-public.ts](C:/Users/StriX/mida-mega-tool-next/src/lib/supabase-public.ts)
-- [src/utils/supabase/proxy.ts](C:/Users/StriX/mida-mega-tool-next/src/utils/supabase/proxy.ts)
-- [src/proxy.ts](C:/Users/StriX/mida-mega-tool-next/src/proxy.ts)
-
-Operational setup files:
-
-- [supabase/manifest-schema.sql](C:/Users/StriX/mida-mega-tool-next/supabase/manifest-schema.sql)
-- [supabase/normalize-d2db.sql](C:/Users/StriX/mida-mega-tool-next/supabase/normalize-d2db.sql)
-- [supabase/weapon-search-trending.sql](C:/Users/StriX/mida-mega-tool-next/supabase/weapon-search-trending.sql)
-- [scripts/import-bungie-manifest-to-supabase.mjs](C:/Users/StriX/mida-mega-tool-next/scripts/import-bungie-manifest-to-supabase.mjs)
-
-Additional notes:
-
-- [docs/developer-manual.md](C:/Users/StriX/mida-mega-tool-next/docs/developer-manual.md)
-- [docs/supabase-manifest.md](C:/Users/StriX/mida-mega-tool-next/docs/supabase-manifest.md)
-
-## Prerequisites
+### Prerequisites:
 
 Install locally:
 
-- Node.js 20+ recommended
-- npm
+- Node.js 20
+  
+```
+npm install
+
+npm run dev
+```
 
 External accounts/services you need:
 
-- a Bungie API key
+- a Bungie API key: Register [here](https://www.bungie.net/en/Application)
 - a Supabase project
 - optional: a Vercel project if you want to deploy
 
 ## Environment Variables
 
-Create `.env.local` in the repo root.
-
-Required for normal local development:
+In your env file, this is required for local development:
 
 ```env
 BUNGIE_API_KEY=your_bungie_api_key
@@ -102,192 +36,19 @@ NEXT_PUBLIC_BUNGIE_API_KEY=your_bungie_api_key
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your_supabase_publishable_key
 ```
+  
+## For the Devs...
+#### _Supabase Connection_
+The project uses Supabase for many of the text fields and other non-image items so that it can properly store popular weapons as part of a trending weapons list on the home front page. This uses a GET request to do so. When a player accesses a weapon page, there is a POST request sent that will update the name of an item with an increment of +1 to the amount of views the weapon has recieved, that list will then be shown to visitors on the front page descending in views. 
 
-Optional but useful for admin/import workflows:
+#### _APIs Used_
 
-```env
-SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
-SUPABASE_DB_URL=your_postgres_connection_string
-```
+While Supabase was used for tracking weapon popularity, the [Bungie Manifest API](https://destinydevs.github.io/BungieNetPlatform/docs/Manifest) and [Bungie.net API](https://bungie-net.github.io/) were used for weapon images and rolls. An [API](https://cdn.jsdelivr.net/gh/altbdoor/d2-api-human@data) by [altbdoor](https://github.com/altbdoor) on GitHub was used as well to match weapons with their respective perk pools correctly.
 
-Notes:
+_GET Requests_: Used during fetching weapon popularity, used for all images of icons, weapon models, and weapon perk selections directly from the Bungie API manifest. Also used to query for weapon names in the manifest and the has the weapon name was associated with.
 
-- `BUNGIE_API_KEY` is used server-side.
-- `NEXT_PUBLIC_BUNGIE_API_KEY` is browser-visible. Keep it only if you intentionally want public client access.
-- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` is expected to be public.
+_Post Requests_: Used to update the view count in Supabase.
 
-## Install And Run
-
-Install dependencies:
-
-```bash
-npm install
-```
-
-Start local development:
-
-```bash
-npm run dev
-```
-
-Open:
-
-```text
-http://localhost:3000
-```
-
-Build production output locally:
-
-```bash
-npm run build
-npm run start
-```
-
-## Supabase Setup
-
-Cloning the repo is not enough for full functionality. Supabase schema and data must exist.
-
-### 1. Create or choose a Supabase project
-
-You need:
-
-- project URL
-- publishable key
-- service role key if doing admin scripts
-- optional direct Postgres URL
-
-### 2. Run SQL files in the Supabase SQL editor
-
-Run these files in this order:
-
-1. [manifest-schema.sql](C:/Users/StriX/mida-mega-tool-next/supabase/manifest-schema.sql)
-2. [normalize-d2db.sql](C:/Users/StriX/mida-mega-tool-next/supabase/normalize-d2db.sql)
-3. [weapon-search-trending.sql](C:/Users/StriX/mida-mega-tool-next/supabase/weapon-search-trending.sql)
-
-What they do:
-
-- `manifest-schema.sql` creates the base imported manifest table
-- `normalize-d2db.sql` creates helper tables for items, perks, traits, and stats
-- `weapon-search-trending.sql` creates the trending search table and increment function
-
-### 3. Import manifest data
-
-Use the included importer:
-
-```bash
-npm run import:manifest:supabase
-```
-
-This loads Bungie's `DestinyInventoryItemDefinition` into Supabase.
-
-You can also provide a local JSON file:
-
-```bash
-node scripts/import-bungie-manifest-to-supabase.mjs ./path/to/DestinyInventoryItemDefinition.json
-```
-
-## What Works Without Full Setup
-
-If you only run `npm install` and `npm run dev`:
-
-- the app can boot
-- some pages render
-- some searches may partially work through fallback paths
-
-But these features require Supabase schema/data:
-
-- `/manifest-lab`
-- manifest-backed search behavior
-- perk icon hydration from imported data
-- homepage trending weapons
-
-## Runtime Flow
-
-### Weapon search
-
-- Search UI lives in [Header.tsx](C:/Users/StriX/mida-mega-tool-next/src/app/components/Header.tsx)
-- Search requests go to [api/weapons/search/route.ts](C:/Users/StriX/mida-mega-tool-next/src/app/api/weapons/search/route.ts)
-- That route prefers Supabase manifest weapon search and falls back to `d2-api-human`
-
-### Weapon details/customization
-
-- Weapon page is [weapon-lab/[hash]/page.tsx](C:/Users/StriX/mida-mega-tool-next/src/app/weapon-lab/[hash]/page.tsx)
-- Data comes from [api/weapons/details/[hash]/route.ts](C:/Users/StriX/mida-mega-tool-next/src/app/api/weapons/details/[hash]/route.ts)
-- Perk organization comes from `d2-api-human`
-- Perk names/icons are hydrated from manifest-backed Supabase data where available
-
-### Manifest lab
-
-- UI: [manifest-lab/page.tsx](C:/Users/StriX/mida-mega-tool-next/src/app/manifest-lab/page.tsx)
-- API: [api/manifest/items/route.ts](C:/Users/StriX/mida-mega-tool-next/src/app/api/manifest/items/route.ts)
-- Data source: Supabase manifest tables via [manifest-items.ts](C:/Users/StriX/mida-mega-tool-next/src/lib/manifest-items.ts)
-
-### Trending weapons
-
-- Search-result click tracking posts to [api/weapons/trending/route.ts](C:/Users/StriX/mida-mega-tool-next/src/app/api/weapons/trending/route.ts)
-- Trending data is stored in Supabase table `weapon_search_trending`
-- Homepage reads top 7 trending weapons in [page.tsx](C:/Users/StriX/mida-mega-tool-next/src/app/page.tsx)
-
-## Vercel Deployment
-
-If deploying to Vercel, add these environment variables in the Vercel project:
-
-- `BUNGIE_API_KEY`
-- `NEXT_PUBLIC_BUNGIE_API_KEY`
-- `NEXT_PUBLIC_SUPABASE_URL`
-- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
-
-Then deploy:
-
-```bash
-vercel deploy --prod
-```
-
-If env vars are missing, the app now fails more gracefully than before, but Supabase-backed functionality will be degraded.
-
-## Troubleshooting
-
-### Homepage still shows fallback trending weapons
-
-Likely causes:
-
-- `weapon_search_trending` table was not created
-- nobody has clicked search results yet
-- Supabase env vars are missing
-
-### Manifest lab returns empty data or errors
-
-Check:
-
-- manifest SQL ran successfully
-- manifest import completed
-- public read policy exists
-- Supabase public env vars are correct
-
-### Weapon page shows missing icons
-
-Check:
-
-- `normalize-d2db.sql` ran
-- `destiny_inventory_items`, `destiny_sandbox_perks`, and `destiny_traits` exist
-- manifest import/normalization completed
-
-### Production site 500s
-
-Check:
-
-- Vercel env vars exist
-- Supabase tables are present
-- latest deployment logs in Vercel
-
-## Recommended First Tasks For A New Developer
-
-1. Get the app booting locally with `.env.local`.
-2. Run the Supabase SQL files.
-3. Import manifest data.
-4. Verify `/manifest-lab` works.
-5. Verify search opens a real weapon page.
-6. Verify homepage trending starts changing after search clicks.
-7. Review the runtime/data flow before making new abstractions.
-
-For a fuller setup guide, read [docs/developer-manual.md](C:/Users/StriX/mida-mega-tool-next/docs/developer-manual.md).
+### _Future Work_
+The current problem of the GET requests for the weapons is that each time you send a GET HTTP request, you have to drag all the image links and stat values directly from the API manifest and that can take upwards of 20 seconds from each weapon. The next major step is to take all weapons, approximately 300 MB of code, and upload it as a large SQL database to Supabase.
+  
