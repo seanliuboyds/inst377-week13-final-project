@@ -51,4 +51,6 @@ _Post Requests_: Used to update the view count in Supabase.
 
 ### _Future Work_
 The current problem of the GET requests for the weapons is that each time you send a GET HTTP request, you have to drag all the image links and stat values directly from the API manifest and that can take upwards of 20 seconds from each weapon. The next major step is to take all weapons, approximately 300 MB of code, and upload it as a large SQL database to Supabase.
+
+[Vercel Link](https://mida-mega-tool-next.vercel.app)
   
